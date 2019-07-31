@@ -1,12 +1,12 @@
 import React from "react";
 import { createDrawerNavigator } from "react-navigation";
-import AllCourses from "./AllCourses";
-import OwnCourses from "./OwnCourses";
-import DrawerIcon from "../../components/DrawerIcon";
+import AllCourses from "../Screens/AllCourses";
+import OwnCourses from "../OwnCourses";
+import DrawerIcon from "../../../components/DrawerIcon";
 import { Platform } from "react-native";
-import OneCourse from "./OneCourse";
-import UpdateCourse from "./UpdateCourse";
-import AddCourse from "./AddCourse";
+import OneCourse from "../OneCourse";
+import UpdateCourse from "../UpdateCourse";
+import AddCourse from "../Screens/AddCourse";
 export const CoursesNav = createDrawerNavigator({
   AllCourses: {
     screen: AllCourses,
