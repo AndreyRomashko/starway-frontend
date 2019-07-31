@@ -9,7 +9,7 @@ import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
 import LinksScreen from "../screens/LinksScreen";
 import SettingsScreen from "../screens/SettingsScreen";
-import { CoursesNav } from "../screens/Courses/CoursesNav";
+import { CoursesNav } from "../screens/Courses/components/CoursesNav";
 
 const config = Platform.select({
   web: { headerMode: "screen" },
@@ -78,7 +78,7 @@ SettingsStack.navigationOptions = {
 SettingsStack.path = "";
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack,
+  HomeStac,
   CoursesStack,
   SettingsStack
 });
