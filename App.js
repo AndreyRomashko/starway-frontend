@@ -1,31 +1,35 @@
-import { AppLoading } from 'expo';
+ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
 import AppNavigator from './navigation/AppNavigator';
+import { ApolloClient } from 'apollo-client';
+import { ApolloProvider } from '@apollo/react-hooks';
+ import {InMemoryCache} from "apollo-cache-inmemory";
+ import { HttpLink } from 'apollo-link-http';
 
+ const cache = new InMemoryCache();
+ const client = new ApolloClient({ link : new HttpLink,cache});
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const showLoader = !isLoadingComplete && !props.skipLoadingScreen;
+  const appLoader = <AppLoading
+      startAsync={loadResourcesAsync}
+      onError={handleLoadingError}
+      onFinish={() => handleFinishLoading(setLoadingComplete)}
+  />;
 
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
-    return (
-      <AppLoading
-        startAsync={loadResourcesAsync}
-        onError={handleLoadingError}
-        onFinish={() => handleFinishLoading(setLoadingComplete)}
-      />
-    );
-  } else {
-    return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
-      </View>
-    );
-  }
+  return (<ApolloProvider client={client}>
+    {showLoader ? appLoader :
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <AppNavigator />
+
+        </View>
+    }
+  </ApolloProvider>)
 }
 
 async function loadResourcesAsync() {
